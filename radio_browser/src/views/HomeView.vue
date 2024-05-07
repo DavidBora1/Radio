@@ -3,11 +3,10 @@
     <h1>Homepage</h1>
     <v-row>
       <v-col cols="12" sm="6" md="4" lg="3" v-for="radio in radios" :key="radio.id">
-        <v-card class="d-flex flex-row card" flat tile @mouseenter="showControls(radio)"
-          @mouseleave="hideControls(radio)">
+        <v-card class="d-flex flex-column card" flat tile>
           <v-img :src="radio.favicon || defaultImage" class="card-image" :alt="radio.name" />
           <v-card-title class="flex-grow-1">{{ radio.name }}</v-card-title>
-          <div v-if="radio.showControls" class="controls">
+          <div class="controls">
             <v-btn @click="togglePlayPause(radio)" :color="radio.playing ? 'error' : 'primary'" small>
               {{ radio.playing ? 'Pause' : 'Play' }}
             </v-btn>
@@ -58,12 +57,6 @@ export default {
       } catch (error) {
         console.error('Error fetching radios:', error);
       }
-    },
-    showControls(radio) {
-      radio.showControls = true;
-    },
-    hideControls(radio) {
-      radio.showControls = false;
     },
     togglePlayPause(radio) {
       if (radio.playing) {
@@ -175,59 +168,40 @@ h1 {
 }
 
 .card {
-  max-width: 400px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s;
-  border-radius: 5px;
-  position: relative;
+  max-width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s;
 }
 
 .card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .card-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 5px;
-  display: none;
-}
-
-.card:hover .card-image {
-  display: block;
+  height: 200px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .v-card-title {
   color: #333;
   font-size: 1.2em;
   font-weight: bold;
+  padding: 10px;
 }
 
 .controls {
-  position: absolute;
-  bottom: 10px;
-  left: 160px;
-  /* Changed from 'right' to 'left' */
   display: flex;
   align-items: center;
-}
-
-.controls .v-btn {
-  margin-right: 50px;
-  /* Changed from 'margin-left' to 'margin-right' */
-  margin-top: 100px;
+  justify-content: space-around;
+  padding: 10px;
 }
 
 .sound-wave {
   display: flex;
   align-items: center;
-  height: 20px;
-  margin-left: 10px;
-  /* Adjust this if necessary */
-  margin-top: 100px;
-  /* Added to push the sound wave down */
 }
 
 .bar {
